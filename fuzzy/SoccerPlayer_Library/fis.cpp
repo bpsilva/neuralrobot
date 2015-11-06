@@ -182,5 +182,8 @@ namespace fis
 
 		if (input > beta && input < gamma)
 			return ((gamma - input)/(gamma - beta));
+
+
+		return 0.0;
 	}
-}
+};

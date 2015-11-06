@@ -4,38 +4,20 @@
 // Inclusão da biblioteca que implementa a interface com o SoccerMatch.
 #include "environm.h"
 #include "fis.h"
+#include "soccerData.h"
 #include <fstream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
 using namespace fis;
-
+using namespace soccerData;
 using namespace std;
-
-
-void generate_neural_data(ofstream myfile)
-{
-// ball_distance
-// ball_angle
-// targe_angle
-// obstacle_distance
-// obstacle_angle
-// spin
-// last_left_motor
-// last_right_motor
-// actual_left_motor
-// actual_right_motor
-
-  	
-
-
-}
 
 
 int main( int argc, char* argv[] ) {
 
-    float ballAngle, targetAngle, ballDistance, leftMotor, rightMotor;
+    float ballAngle, targetAngle, ballDistance;
 
     // Declaração do objeto que representa o ambiente.
     environm::soccer::clientEnvironm environment;
@@ -59,10 +41,26 @@ int main( int argc, char* argv[] ) {
     // Laço de execução de ações.
     printf( "\nRunning..." );
 
-    ofstream myfile;
-  	
+
+
+	// float ball_distance_n;
+	// float ball_angle_n;
+	// float target_angle_n;
+	// float obstacle_distance_n;
+	// float obstacle_angle_n;
+	// float spin_n;
+	// float last_left_motor_n;
+	// float last_right_motor_n;
+	// float actual_left_motor_n;
+	// float actual_right_motor_n;
+
+    SoccerData sd;
 
     while ( 1 ) {
+
+
+
+
         // Deve obter os dados desejados do ambiente. Métodos do clientEnvironm.
         // Exemplos de métodos que podem ser utilizados.
         ballAngle = environment.getBallAngle();
@@ -74,16 +72,16 @@ int main( int argc, char* argv[] ) {
         f.defuzzify();
 
 
-        std::cout<< "left : " << f.getLeftMotor() << " right: " << f.getRightMotor()<<"\n";
+        //std::cout<< "left : " << f.getLeftMotor() << " right: " << f.getRightMotor()<<"\n";
 
         // Transmite ação do robô ao ambiente. Fica bloqueado até que todos os
         // robôs joguem. Se erro, retorna false (neste exemplo, sai do laco).
         if ( ! environment.act( f.getLeftMotor(), f.getRightMotor() ) ) {
             break; // Termina a execução se falha ao agir.
         }
-        myfile.open ("example.txt", ios::ate | ios::app);
-        myfile << "Writing this to a file.\n";
-          myfile.close();
+        
+        sd.generate(environment);
+          
         
     }
 
