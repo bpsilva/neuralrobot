@@ -4,16 +4,13 @@
 // Inclusão da biblioteca que implementa a interface com o SoccerMatch.
 #include "environm.h"
 #include "fis.h"
-#include "soccerData.h"
 #include <fstream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
 using namespace fis;
-using namespace soccerData;
 using namespace std;
-
 
 int main( int argc, char* argv[] ) {
 
@@ -36,12 +33,8 @@ int main( int argc, char* argv[] ) {
         return 0;  // Cancela operação se não conseguiu conectar-se.
     }
 
-    Fis f;
-
     // Laço de execução de ações.
     printf( "\nRunning..." );
-
-
 
 	// float ball_distance_n;
 	// float ball_angle_n;
@@ -54,13 +47,15 @@ int main( int argc, char* argv[] ) {
 	// float actual_left_motor_n;
 	// float actual_right_motor_n;
 
-    SoccerData sd;
+    Fis f;
+
+    float lastLeftMotor = 0.0f;
+    float lastRightMotor = 0.0f;
+
+    ofstream myfile;
+    myfile.open ("out", ios::ate | ios::app);
 
     while ( 1 ) {
-
-
-
-
         // Deve obter os dados desejados do ambiente. Métodos do clientEnvironm.
         // Exemplos de métodos que podem ser utilizados.
         ballAngle = environment.getBallAngle();
@@ -71,7 +66,6 @@ int main( int argc, char* argv[] ) {
         f.infer();
         f.defuzzify();
 
-
         //std::cout<< "left : " << f.getLeftMotor() << " right: " << f.getRightMotor()<<"\n";
 
         // Transmite ação do robô ao ambiente. Fica bloqueado até que todos os
@@ -79,12 +73,23 @@ int main( int argc, char* argv[] ) {
         if ( ! environment.act( f.getLeftMotor(), f.getRightMotor() ) ) {
             break; // Termina a execução se falha ao agir.
         }
-        
-        sd.generate(environment);
-          
-        
+
+        myfile  << environment.getDistance()		                    << " "
+                << environment.getBallAngle()                           << " "
+                << environment.getTargetAngle(environment.getOwnGoal()) << " "
+                << environment.getCollision()                           << " "
+                << environment.getObstacleAngle()                       << " "
+                << environment.getSpin()			                    << " "
+                << lastLeftMotor		                                << " "
+                << lastRightMotor                                       << " "
+                << f.getLeftMotor()	                                    << " "
+                << f.getRightMotor()	                                << endl;
+
+        lastLeftMotor = f.getLeftMotor();
+        lastRightMotor = f.getRightMotor();
     }
 
+    myfile.close();
 
     return 0;
 }

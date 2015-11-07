@@ -96,10 +96,10 @@ namespace fis
 	void Fis::setMotorValues(float centroid)
 	{
 		centroid = centroid*(M_PI/180);
-		std::cout << "centroid: " << centroid << std::endl;
+		//std::cout << "centroid: " << centroid << std::endl;
 
 		leftMotor  = (cos(centroid) - sin(centroid))/2.5;
-    rightMotor = (cos(centroid) + sin(centroid))/2.5;
+    	rightMotor = (cos(centroid) + sin(centroid))/2.5;
 	}
 
 	float Fis::getRightMotor()
