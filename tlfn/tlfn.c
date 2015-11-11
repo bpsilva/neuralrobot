@@ -22,7 +22,7 @@
 #define FREQ_GENERAL 10
 #define NUM_OCULTOS 5
 #define FREQ_RELATOR 500
-
+#define ITERATIONS 500
 
 //**************************************** Macros ************************************************
 #define QUADRADO(x) ((x) * (x))
@@ -164,7 +164,7 @@ int main (int argc, char *argv[])
   // }
   
   int counter;
-  for(counter = 0 ; counter < 50 ; counter++)
+  for(counter = 0 ; counter < ITERATIONS ; counter++)
   {
 
     GeraValores();
