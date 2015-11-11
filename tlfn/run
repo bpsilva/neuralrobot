@@ -1,0 +1,4 @@
+tlfn futebol -o 10 -e 10000 -r 500 -p 0.001
+
+
+./tlfn <arquivo_sem_extensao> [-o num_ocultos=5] [-p passo=0.000010] [-i init_pesos=0.010000] [-e max_epocas=10000] [-g freq_general=10] [-r freq_rel=500] [-s random_seed] [-t]
